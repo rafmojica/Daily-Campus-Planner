@@ -45,6 +45,7 @@ export default function MyLayoutsScreen() {
         <FlatList
           data={layouts}
           keyExtractor={item => item.id}
+          contentContainerStyle={styles.list}
           renderItem={({ item }) => (
             <LayoutCard title={item.title} onPress={() => setSelected(item)} />
           )}
@@ -59,12 +60,17 @@ export default function MyLayoutsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#f2f4f8',
   },
   centered: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: '#f2f4f8',
+  },
+  list: {
+    padding: 16,
+    gap: 12,
   },
   empty: {
     color: '#888',

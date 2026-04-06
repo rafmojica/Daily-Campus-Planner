@@ -16,13 +16,19 @@ export default function LayoutCard({ title, onPress }: Props) {
 
 const styles = StyleSheet.create({
   card: {
-    paddingVertical: 16,
-    paddingHorizontal: 20,
-    borderBottomWidth: 1,
-    borderBottomColor: '#eee',
+    backgroundColor: '#fff',
+    borderRadius: 14,
+    paddingVertical: 18,
+    paddingHorizontal: 18,
+    shadowColor: '#000',
+    shadowOpacity: 0.06,
+    shadowRadius: 6,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 2,
   },
   title: {
     fontSize: 16,
+    fontWeight: '600',
     color: '#111',
   },
 })

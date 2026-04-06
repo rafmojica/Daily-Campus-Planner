@@ -63,10 +63,11 @@ export default function FriendsLayoutsScreen() {
         <FlatList
           data={layouts}
           keyExtractor={item => item.id}
+          contentContainerStyle={styles.list}
           renderItem={({ item }) => (
-            <TouchableOpacity style={styles.row} onPress={() => setSelected(item)}>
+            <TouchableOpacity style={styles.card} onPress={() => setSelected(item)}>
               <Text style={styles.title}>{item.title}</Text>
-              <Text style={styles.friend}>— {item.friendUsername}</Text>
+              <Text style={styles.friend}>by {item.friendUsername}</Text>
             </TouchableOpacity>
           )}
         />
@@ -80,33 +81,41 @@ export default function FriendsLayoutsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#f2f4f8',
   },
   centered: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: '#f2f4f8',
+  },
+  list: {
+    padding: 16,
+    gap: 12,
   },
   empty: {
     color: '#888',
     fontSize: 16,
   },
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center',
+  card: {
+    backgroundColor: '#fff',
+    borderRadius: 14,
     paddingVertical: 16,
-    paddingHorizontal: 20,
-    borderBottomWidth: 1,
-    borderBottomColor: '#eee',
-    gap: 6,
+    paddingHorizontal: 18,
+    shadowColor: '#000',
+    shadowOpacity: 0.06,
+    shadowRadius: 6,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 2,
+    gap: 4,
   },
   title: {
     fontSize: 16,
+    fontWeight: '600',
     color: '#111',
-    fontWeight: '500',
   },
   friend: {
-    fontSize: 16,
+    fontSize: 13,
     color: '#888',
   },
 })

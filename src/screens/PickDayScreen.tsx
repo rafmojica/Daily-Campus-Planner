@@ -13,13 +13,12 @@ type Layout = {
   nightActivity: string
 }
 
-const FIELDS: { key: keyof Omit<Layout, 'id'>; label: string }[] = [
-  { key: 'title', label: 'Title' },
-  { key: 'morningStudy', label: 'Morning Study' },
-  { key: 'lunch', label: 'Lunch' },
-  { key: 'afternoonStudy', label: 'Afternoon Study' },
-  { key: 'dinner', label: 'Dinner' },
-  { key: 'nightActivity', label: 'Night Activity' },
+const FIELDS: { key: keyof Omit<Layout, 'id'>; label: string; icon: string }[] = [
+  { key: 'morningStudy', label: 'Morning Study', icon: '☀️' },
+  { key: 'lunch', label: 'Lunch', icon: '🍽️' },
+  { key: 'afternoonStudy', label: 'Afternoon Study', icon: '📚' },
+  { key: 'dinner', label: 'Dinner', icon: '🌙' },
+  { key: 'nightActivity', label: 'Night Activity', icon: '✨' },
 ]
 
 export default function PickDayScreen() {
@@ -65,11 +64,15 @@ export default function PickDayScreen() {
   }
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.heading}>Your Day</Text>
-      {FIELDS.map(({ key, label }) => (
-        <View key={key} style={styles.row}>
-          <Text style={styles.label}>{label}</Text>
+    <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
+      <View style={styles.header}>
+        <Text style={styles.headerTitle}>Your Day</Text>
+        <Text style={styles.headerSubtitle}>{layout?.title}</Text>
+      </View>
+
+      {FIELDS.map(({ key, label, icon }) => (
+        <View key={key} style={styles.card}>
+          <Text style={styles.cardLabel}>{icon}{"  "}{label}</Text>
           <Text style={styles.value}>{layout?.[key]}</Text>
         </View>
       ))}
@@ -82,35 +85,57 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: '#f2f4f8',
   },
   empty: {
     color: '#888',
     fontSize: 16,
   },
   container: {
-    padding: 24,
+    backgroundColor: '#f2f4f8',
+    padding: 16,
     gap: 16,
+    paddingBottom: 48,
   },
-  heading: {
-    fontSize: 22,
+  header: {
+    backgroundColor: '#003262',
+    borderRadius: 16,
+    padding: 24,
+    alignItems: 'center',
+    marginBottom: 4,
+  },
+  headerTitle: {
+    fontSize: 26,
     fontWeight: '700',
-    color: '#111',
-    marginBottom: 8,
+    color: '#fff',
+    letterSpacing: 0.3,
   },
-  row: {
-    paddingVertical: 14,
-    borderBottomWidth: 1,
-    borderBottomColor: '#eee',
-    gap: 4,
+  headerSubtitle: {
+    fontSize: 14,
+    color: '#a8c0dd',
+    marginTop: 4,
   },
-  label: {
-    fontSize: 12,
-    fontWeight: '600',
-    color: '#888',
+  card: {
+    backgroundColor: '#fff',
+    borderRadius: 14,
+    padding: 16,
+    gap: 6,
+    shadowColor: '#000',
+    shadowOpacity: 0.06,
+    shadowRadius: 6,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 2,
+  },
+  cardLabel: {
+    fontSize: 13,
+    fontWeight: '700',
+    color: '#003262',
     textTransform: 'uppercase',
+    letterSpacing: 0.5,
   },
   value: {
-    fontSize: 16,
+    fontSize: 17,
     color: '#111',
+    fontWeight: '500',
   },
 })

@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { onAuthStateChanged, signOut, User } from 'firebase/auth'
 import { doc, getDoc } from 'firebase/firestore'
+import { Ionicons } from '@expo/vector-icons'
 import { auth, db } from './src/firebase/firebaseConfig'
 import LoginScreen from './src/screens/LoginScreen'
 import MyLayoutsScreen from './src/screens/MyLayoutsScreen'
@@ -64,13 +65,34 @@ export default function App() {
       <Tab.Navigator
         screenOptions={{
           headerRight: () => <ProfileButton username={username} />,
+          tabBarShowLabel: false,
         }}
       >
-        <Tab.Screen name="My Layouts" component={MyLayoutsScreen} />
-        <Tab.Screen name="Create Layout" component={CreateLayoutScreen} />
-        <Tab.Screen name="Friends Layouts" component={FriendsLayoutsScreen} />
-        <Tab.Screen name="Add Friend" component={AddFriendScreen} />
-        <Tab.Screen name="Pick My Day" component={PickDayScreen} />
+        <Tab.Screen
+          name="My Layouts"
+          component={MyLayoutsScreen}
+          options={{ tabBarIcon: ({ color, size }) => <Ionicons name="albums-outline" size={size} color={color} /> }}
+        />
+        <Tab.Screen
+          name="Create Layout"
+          component={CreateLayoutScreen}
+          options={{ tabBarIcon: ({ color, size }) => <Ionicons name="add-circle-outline" size={size} color={color} /> }}
+        />
+        <Tab.Screen
+          name="Friends Layouts"
+          component={FriendsLayoutsScreen}
+          options={{ tabBarIcon: ({ color, size }) => <Ionicons name="people-outline" size={size} color={color} /> }}
+        />
+        <Tab.Screen
+          name="Add Friend"
+          component={AddFriendScreen}
+          options={{ tabBarIcon: ({ color, size }) => <Ionicons name="person-add-outline" size={size} color={color} /> }}
+        />
+        <Tab.Screen
+          name="Pick My Day"
+          component={PickDayScreen}
+          options={{ tabBarIcon: ({ color, size }) => <Ionicons name="shuffle-outline" size={size} color={color} /> }}
+        />
       </Tab.Navigator>
     </NavigationContainer>
   )

@@ -63,11 +63,19 @@ const OPTIONS: Record<string, string[]> = {
 };
 
 const LABELS: Record<string, string> = {
-  morningStudy: "Morning Study Location",
-  lunch: "Lunch Location",
-  afternoonStudy: "Afternoon Study Location",
-  dinner: "Dinner Location",
+  morningStudy: "Morning Study",
+  lunch: "Lunch",
+  afternoonStudy: "Afternoon Study",
+  dinner: "Dinner",
   nightActivity: "Night Activity",
+};
+
+const SECTION_ICONS: Record<string, string> = {
+  morningStudy: "☀️",
+  lunch: "🍽️",
+  afternoonStudy: "📚",
+  dinner: "🌙",
+  nightActivity: "✨",
 };
 
 type Selections = Record<string, string>;
@@ -82,8 +90,10 @@ function OptionSelector({
   onSelect: (value: string) => void;
 }) {
   return (
-    <View style={styles.field}>
-      <Text style={styles.label}>{LABELS[field]}</Text>
+    <View style={styles.card}>
+      <Text style={styles.cardLabel}>
+        {SECTION_ICONS[field]}{"  "}{LABELS[field]}
+      </Text>
       <View style={styles.options}>
         {OPTIONS[field].map((option) => (
           <TouchableOpacity
@@ -151,12 +161,18 @@ export default function CreateLayoutScreen() {
   }
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <View style={styles.field}>
-        <Text style={styles.label}>Title</Text>
+    <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
+      <View style={styles.header}>
+        <Text style={styles.headerTitle}>New Layout</Text>
+        <Text style={styles.headerSubtitle}>Design your ideal campus day</Text>
+      </View>
+
+      <View style={styles.card}>
+        <Text style={styles.cardLabel}>📝  Title</Text>
         <TextInput
           style={styles.input}
           placeholder="e.g. Productive Tuesday"
+          placeholderTextColor="#aaa"
           value={title}
           onChangeText={setTitle}
         />
@@ -171,10 +187,14 @@ export default function CreateLayoutScreen() {
         />
       ))}
 
-      {error ? <Text style={styles.error}>{error}</Text> : null}
+      {error ? (
+        <View style={styles.errorBox}>
+          <Text style={styles.error}>{error}</Text>
+        </View>
+      ) : null}
 
       <TouchableOpacity
-        style={styles.button}
+        style={[styles.button, saving && styles.buttonDisabled]}
         onPress={handleSave}
         disabled={saving}
       >
@@ -190,24 +210,53 @@ export default function CreateLayoutScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
-    gap: 24,
-    paddingBottom: 48,
+    padding: 16,
+    gap: 16,
+    paddingBottom: 56,
+    backgroundColor: "#f2f4f8",
   },
-  field: {
-    gap: 10,
+  header: {
+    backgroundColor: "#003262",
+    borderRadius: 16,
+    padding: 24,
+    alignItems: "center",
+    marginBottom: 4,
   },
-  label: {
+  headerTitle: {
+    fontSize: 26,
+    fontWeight: "700",
+    color: "#fff",
+    letterSpacing: 0.3,
+  },
+  headerSubtitle: {
     fontSize: 14,
-    fontWeight: "600",
-    color: "#333",
+    color: "#a8c0dd",
+    marginTop: 4,
+  },
+  card: {
+    backgroundColor: "#fff",
+    borderRadius: 14,
+    padding: 16,
+    gap: 12,
+    shadowColor: "#000",
+    shadowOpacity: 0.06,
+    shadowRadius: 6,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 2,
+  },
+  cardLabel: {
+    fontSize: 15,
+    fontWeight: "700",
+    color: "#003262",
   },
   input: {
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 8,
+    borderWidth: 1.5,
+    borderColor: "#dde3ef",
+    borderRadius: 10,
     padding: 12,
     fontSize: 15,
+    color: "#111",
+    backgroundColor: "#f8f9fc",
   },
   options: {
     flexDirection: "row",
@@ -215,39 +264,58 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   chip: {
-    paddingVertical: 8,
+    paddingVertical: 7,
     paddingHorizontal: 14,
     borderRadius: 20,
-    borderWidth: 1,
-    borderColor: "#ccc",
-    backgroundColor: "#f5f5f5",
+    borderWidth: 1.5,
+    borderColor: "#dde3ef",
+    backgroundColor: "#f2f4f8",
   },
   chipSelected: {
     backgroundColor: "#003262",
     borderColor: "#003262",
   },
   chipText: {
-    fontSize: 14,
-    color: "#444",
+    fontSize: 13,
+    color: "#555",
+    fontWeight: "500",
   },
   chipTextSelected: {
     color: "#fff",
-    fontWeight: "600",
+    fontWeight: "700",
+  },
+  errorBox: {
+    backgroundColor: "#fff0f0",
+    borderRadius: 10,
+    padding: 12,
+    borderWidth: 1,
+    borderColor: "#fcc",
   },
   error: {
-    color: "red",
+    color: "#c0392b",
     fontSize: 14,
     textAlign: "center",
+    fontWeight: "500",
   },
   button: {
     backgroundColor: "#003262",
-    borderRadius: 8,
-    padding: 16,
+    borderRadius: 14,
+    padding: 18,
     alignItems: "center",
+    marginTop: 4,
+    shadowColor: "#003262",
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 4 },
+    elevation: 4,
+  },
+  buttonDisabled: {
+    opacity: 0.6,
   },
   buttonText: {
     color: "#fff",
     fontSize: 16,
-    fontWeight: "600",
+    fontWeight: "700",
+    letterSpacing: 0.3,
   },
 });
