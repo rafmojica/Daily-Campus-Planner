@@ -50,10 +50,15 @@ export default function LoginScreen() {
           uid: credential.user.uid,
           email,
           username,
+          friends: [],
         })
       } else {
         // Username exists -> Log in
-        await signInWithEmailAndPassword(auth, email, password)
+        try {
+          await signInWithEmailAndPassword(auth, email, password)
+        } catch {
+          throw new Error('INCORRECT PASSWORD')
+        }
       }
     } catch (e: any) {
       setError(e.message ?? 'Something went wrong.')
